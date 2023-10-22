@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <random>
 #include <vector>
 
 #include "udp_discovery_protocol.hpp"
@@ -91,9 +92,10 @@ static bool IsRightTime(long last_action_time, long now_time, long timeout,
   return false;
 }
 
-static uint32_t MakeRandomId() {
-  srand((unsigned int)time(0));
-  return (uint32_t)rand();
+static uint32_t MakeRandomId()
+{
+  std::random_device rd;
+  return rd();
 }
 
 namespace udpdiscovery {
