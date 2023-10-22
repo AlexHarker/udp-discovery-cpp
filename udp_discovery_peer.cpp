@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
 
 #include "udp_discovery_protocol.hpp"
@@ -82,11 +83,11 @@ static bool IsRightTime(long last_action_time, long now_time, long timeout,
 
   long time_passed = now_time - last_action_time;
   if (time_passed >= timeout) {
-    time_to_wait_out = timeout - (time_passed - timeout);
+    time_to_wait_out = std::max(timeout - (time_passed - timeout), 1L);
     return true;
   }
 
-  time_to_wait_out = timeout - time_passed;
+  time_to_wait_out = std::max(timeout - time_passed, 1L);
   return false;
 }
 
